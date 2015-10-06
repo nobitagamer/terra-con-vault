@@ -15,8 +15,6 @@ RUN curl -Lo /vault/vault_${VAULT_VERSION}_linux_amd64.zip https://dl.bintray.co
     rm -rf /vault/vault_${VAULT_VERSION}_linux_amd64.zip && \
     chmod +x /vault/vault
 
-EXPOSE 8200 
+EXPOSE 8200
 
 ENTRYPOINT ["/vault/vault"]
-
-CMD []
