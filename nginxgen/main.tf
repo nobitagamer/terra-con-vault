@@ -25,6 +25,6 @@ resource "docker_container" "nginxgen" {
     env = [
         "CONSUL=consul:8500",
         "SERVICE_NAME=nginxgen",
-        "SERVICE_NODE=localhost.consul"
+        "SERVICE_TAGS=nginx"
     ]
 }

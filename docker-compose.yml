@@ -1,17 +1,41 @@
 consul:
   build: consul/
-  hostname: consul
+  hostname: consul.localhost.consul
   ports:
-    - "8300:8300"
-    - "8400:8400"
+    - "53:53/udp"
     - "8500:8500"
-    - "8600:53"
-  command: agent -server -bootstrap-expect 1 -config-dir /consul/conf.d
+  command: agent -server -bootstrap-expect 1 -config-dir /consul/conf.d -advertise 192.168.99.100 -client 0.0.0.0
   volumes:
     - consul/assets/conf.d:/consul/conf.d
+  environment:
+      - "SERVICE_NAME=consul"
+      - "SERVICE_TAGS=consul"
+
+registrator:
+  image: gliderlabs/registrator:latest
+  hostname: registrator.localhost.consul
+  command: consul://consul:8500
+  links:
+    - consul:consul
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+
+
+nginxgen:
+  build: nginxgen/
+  hostname: localhost.consul
+  ports:
+    - "80:80"
+  links:
+    - consul:consul
+  environment:
+    - "CONSUL=consul:8500"
+    - "SERVICE_NAME=nginxgen"
+    - "SERVICE_TAGS=nginx"
+
 vault:
   build: vault/
-  hostname: vault
+  hostname: vault.localhost.consul
   ports:
     - "8200:8200"
   command: server -config=/vault/conf.d/vault.hcl
@@ -19,3 +43,8 @@ vault:
     - consul:consul
   volumes:
     - vault/assets/conf.d:/vault/conf.d
+  environment:
+    - "SERVICE_NAME=vault"
+    - "SERVICE_TAGS=vault"
+    - "VAULT_ADDR=http://0.0.0.0:8200"
+    - "VAULT_TOKEN=lofasz"
