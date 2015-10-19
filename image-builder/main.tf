@@ -1,12 +1,6 @@
-variable name {}
-variable tag {}
-variable pull {}
-variable path {}
-variable repository {}
-
 resource "null_resource" "tempImage" {
     provisioner "local-exec" {
-        command = "docker build -t ${var.repository}/${var.name}:${var.tag} ${var.path}"
+        command = "docker build -f ${var.basePath}/${var.path}/${var.dockerfile} -t ${var.repository}/${var.name}:${var.tag} ${var.basePath}/${var.path}"
     }
 }
 

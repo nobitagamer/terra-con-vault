@@ -12,9 +12,10 @@ tar -C /usr/local/bin --strip-components 1 -zxf -
 
 #Setup Consul Template Files
 RUN mkdir /etc/consul-templates
-ENV CT_FILE /etc/consul-templates/nginx.conf
 
 #Setup Nginx File
+ENV CT_FILE ./assets/templates/nginx.conf.ctmpl
+ENV CT_FILE_PATH /etc/consul-templates/nginx.conf
 ENV NX_FILE /etc/nginx/conf.d/app.conf
 
 #Default Variables
@@ -26,10 +27,10 @@ ENV SERVICE consul-8500
 # 2. Start Nginx
 # 3. Start Consul Template
 
-ADD ./assets/templates/nginx.conf ${CT_FILE}
+ADD ${CT_FILE} ${CT_FILE_PATH}
 
 CMD \
     /usr/sbin/nginx -c /etc/nginx/nginx.conf \
     & CONSUL_TEMPLATE_LOG=debug consul-template \
         -consul=$CONSUL \
-        -template "$CT_FILE:$NX_FILE:/usr/sbin/nginx -s reload";
+        -template "$CT_FILE_PATH:$NX_FILE:/usr/sbin/nginx -s reload";

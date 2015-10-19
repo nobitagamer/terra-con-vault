@@ -1,17 +1,20 @@
+variable basePath {}
 variable consul {}
+variable repository {}
 
 module "dockerImageHelper" {
     source = "../image-builder"
     name = "vault"
-    path = "./vault"
+    basePath = "${var.basePath}"
+    path = "vault"
     tag = "latest"
     pull = false
-    repository = "quay.io/sweebr"
+    repository = "${var.repository}"
 }
 
 resource "docker_container" "vault" {
     name = "vault"
-    hostname = "vault.service.consul"
+    hostname = "vault"
     image = "${module.dockerImageHelper.dockerImage}"
     must_run = true
     command = [
@@ -20,15 +23,10 @@ resource "docker_container" "vault" {
     ]
     env = [
         "SERVICE_NAME=vault",
-        "SERVICE_NODE=vault.consul",
-        "VAULT_ADDR=http://0.0.0.0:8200",
-        "VAULT_TOKEN=lofasz"
-    ]
-    links = [
-        "${var.consul}:consul"
+        "VAULT_ADDR=http://0.0.0.0:8200"
     ]
     volumes = {
-        host_path = "${path.cwd}/vault/assets/conf.d"
+        host_path = "${path.cwd}/${var.basePath}/vault/assets/conf.d"
         container_path = "/vault/conf.d"
     }
     ports = {
