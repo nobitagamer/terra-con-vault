@@ -1,4 +1,5 @@
 variable consul {}
+variable repository {}
 
 module "dockerImageHelper" {
     source = "../image-builder"
@@ -6,7 +7,7 @@ module "dockerImageHelper" {
     path = "./vault"
     tag = "latest"
     pull = false
-    repository = "quay.io/sweebr"
+    repository = "${var.repository}"
 }
 
 resource "docker_container" "vault" {

@@ -1,10 +1,12 @@
+variable repository {}
+
 module "dockerImageHelper" {
     source = "../image-builder"
     name = "consul"
     path = "./consul"
     tag = "latest"
     pull = false
-    repository = "quay.io/sweebr"
+    repository = "${var.repository}"
 }
 
 resource "docker_container" "consul" {

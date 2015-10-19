@@ -5,19 +5,28 @@ provider "docker" {
 
 module "consul" {
     source = "./consul"
+    # Docker Hub repository
+    repository = "${var.repository}"
 }
 
 module "registrator" {
     source = "./registrator"
+    # To make sure that consul is running we use it's name as a variable in other modules
     consul = "${module.consul.name}"
 }
 
 module "nginxgen" {
     source = "./nginxgen"
+    # To make sure that consul is running we use it's name as a variable in other modules
     consul = "${module.consul.name}"
+    # Docker Hub repository
+    repository = "${var.repository}"
 }
 
 module "vault" {
     source = "./vault"
+    # To make sure that consul is running we use it's name as a variable in other modules
     consul = "${module.consul.name}"
+    # Docker Hub repository
+    repository = "${var.repository}"
 }
