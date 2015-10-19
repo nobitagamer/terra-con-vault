@@ -22,8 +22,6 @@ RUN curl -Lo /consul/${CONSUL_VERSION}_linux_amd64.zip https://dl.bintray.com/mi
     cp -r /tmp/dist/* /consul/ui && \
     rm -rf /tmp/*
 
-EXPOSE 8300 8400 8500 8600
+EXPOSE 53 8500
 
 ENTRYPOINT ["/consul/consul"]
-
-CMD []
