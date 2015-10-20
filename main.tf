@@ -9,6 +9,8 @@ module "consul" {
     repository = "${var.repository}"
     # Force binding to the docker host ip
     dockerHostIp = "${var.dockerHostIp}"
+    # Dynamic basePath
+    basePath = "${var.basePath}"
 }
 
 module "registrator" {
@@ -25,6 +27,8 @@ module "nginxgen" {
     consul = "${module.consul.name}"
     # Docker Hub repository
     repository = "${var.repository}"
+    # Dynamic basePath
+    basePath = "${var.basePath}"
 }
 
 module "vault" {
@@ -33,4 +37,6 @@ module "vault" {
     consul = "${module.consul.name}"
     # Docker Hub repository
     repository = "${var.repository}"
+    # Dynamic basePath
+    basePath = "${var.basePath}"
 }

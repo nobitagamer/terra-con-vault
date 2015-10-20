@@ -4,7 +4,8 @@ variable repository {}
 module "dockerImageHelper" {
     source = "../image-builder"
     name = "nginxgen"
-    path = "./nginxgen"
+    basePath = "${var.basePath}"
+    path = "nginxgen"
     tag = "latest"
     pull = false
     repository = "${var.repository}"

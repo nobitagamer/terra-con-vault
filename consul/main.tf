@@ -1,10 +1,12 @@
+variable basePath {}
 variable dockerHostIp {}
 variable repository {}
 
 module "dockerImageHelper" {
     source = "../image-builder"
     name = "consul"
-    path = "./consul"
+    basePath = "${var.basePath}"
+    path = "consul"
     tag = "latest"
     pull = false
     repository = "${var.repository}"

@@ -4,7 +4,8 @@ variable repository {}
 module "dockerImageHelper" {
     source = "../image-builder"
     name = "vault"
-    path = "./vault"
+    basePath = "${var.basePath}"
+    path = "vault"
     tag = "latest"
     pull = false
     repository = "${var.repository}"
