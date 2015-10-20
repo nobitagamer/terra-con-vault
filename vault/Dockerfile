@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 RUN apt-get update && \
-    apt-get install ca-certificates curl unzip -y && \
+    apt-get install ca-certificates curl unzip jq -y && \
     apt-get autoclean && \
     apt-get --purge -y autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

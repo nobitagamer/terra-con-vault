@@ -1,4 +1,5 @@
 variable consul {}
+variable dockerHostIp {}
 
 resource "docker_image" "registrator" {
     keep_updated = true
@@ -7,7 +8,7 @@ resource "docker_image" "registrator" {
 
 resource "docker_container" "registrator" {
     name = "registrator"
-    hostname = "registrator.consul"
+    hostname = "registrator"
     image = "${docker_image.registrator.latest}"
     must_run = true
     links = [
@@ -16,8 +17,10 @@ resource "docker_container" "registrator" {
     volumes = {
         host_path = "/var/run/docker.sock"
         container_path = "/tmp/docker.sock"
+        read_only = true
     }
     command = [
+        "-ip=${var.dockerHostIp}",
         "consul://consul:8500"
     ]
 }

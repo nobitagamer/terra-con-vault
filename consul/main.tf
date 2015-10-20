@@ -1,3 +1,4 @@
+variable dockerHostIp {}
 variable repository {}
 
 module "dockerImageHelper" {
@@ -18,7 +19,7 @@ resource "docker_container" "consul" {
         "agent",
         "-server",
         "-client=0.0.0.0",
-        "-advertise=192.168.99.100",
+        "-advertise=${var.dockerHostIp}",
         "-bootstrap-expect=1",
         "-config-dir=/consul/conf.d"
     ]
@@ -28,6 +29,14 @@ resource "docker_container" "consul" {
     volumes = {
         host_path = "${path.cwd}/consul/assets/conf.d"
         container_path = "/consul/conf.d"
+    }
+    ports = {
+        internal = 8300
+        external = 8300
+    }
+    ports = {
+        internal = 8400
+        external = 8400
     }
     ports = {
         internal = 8500

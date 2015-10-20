@@ -12,7 +12,7 @@ module "dockerImageHelper" {
 
 resource "docker_container" "vault" {
     name = "vault"
-    hostname = "vault.service.consul"
+    hostname = "vault"
     image = "${module.dockerImageHelper.dockerImage}"
     must_run = true
     command = [
@@ -21,7 +21,6 @@ resource "docker_container" "vault" {
     ]
     env = [
         "SERVICE_NAME=vault",
-        "SERVICE_NODE=vault.consul",
         "VAULT_ADDR=http://0.0.0.0:8200",
         "VAULT_TOKEN=lofasz"
     ]

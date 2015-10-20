@@ -12,7 +12,7 @@ module "dockerImageHelper" {
 
 resource "docker_container" "nginxgen" {
     name = "nginxgen"
-    hostname = "localhost.dev"
+    hostname = "nginxgen"
     image = "${module.dockerImageHelper.dockerImage}"
     must_run = true
     links = [

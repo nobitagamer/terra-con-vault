@@ -7,12 +7,16 @@ module "consul" {
     source = "./consul"
     # Docker Hub repository
     repository = "${var.repository}"
+    # Force binding to the docker host ip
+    dockerHostIp = "${var.dockerHostIp}"
 }
 
 module "registrator" {
     source = "./registrator"
     # To make sure that consul is running we use it's name as a variable in other modules
     consul = "${module.consul.name}"
+    # Force binding to the docker host ip
+    dockerHostIp = "${var.dockerHostIp}"
 }
 
 module "nginxgen" {
