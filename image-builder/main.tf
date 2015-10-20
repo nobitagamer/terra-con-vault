@@ -1,6 +1,6 @@
 resource "null_resource" "tempImage" {
     provisioner "local-exec" {
-        command = "docker build -t ${var.repository}/${var.name}:${var.tag} ${var.path}"
+        command = "docker build -f ${var.dockerfile} -t ${var.repository}/${var.name}:${var.tag} ${var.path}"
     }
 }
 

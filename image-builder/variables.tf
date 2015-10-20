@@ -1,3 +1,8 @@
+variable dockerfile {
+    description = "Dockerfile name"
+    default = "Dockerfile"
+}
+
 variable name {
     description = "Name of the docker image to build"
 }
