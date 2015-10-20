@@ -29,7 +29,7 @@ resource "docker_container" "consul" {
         "SERVICE_NAME=consul"
     ]
     volumes = {
-        host_path = "${path.cwd}/consul/assets/conf.d"
+        host_path = "${path.cwd}/${var.basePath}/consul/assets/conf.d"
         container_path = "/consul/conf.d"
     }
     ports = {

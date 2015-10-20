@@ -30,7 +30,7 @@ resource "docker_container" "vault" {
         "${var.consul}:consul"
     ]
     volumes = {
-        host_path = "${path.cwd}/vault/assets/conf.d"
+        host_path = "${path.cwd}/${var.basePath}/vault/assets/conf.d"
         container_path = "/vault/conf.d"
     }
     ports = {
