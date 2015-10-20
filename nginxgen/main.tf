@@ -1,3 +1,4 @@
+variable basePath {}
 variable consul {}
 variable repository {}
 
