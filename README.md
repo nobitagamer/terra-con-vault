@@ -36,7 +36,8 @@ DNS Forwarding
 For proper forwarding of the DNS queries to consul and so resolving domains like `consul.node.consul` or `vault.service.consul` it is required that you configure your resolver to look for .consul queries at your DOCKER_HOST to achieve that it's the easiest to:
 
 ```shell
-DOCKER_MACHINE_IP=$(docker-machine ip <machine name>)
+DOCKER_MACHINE_NAME="default"
+DOCKER_MACHINE_IP=$(docker-machine ip $DOCKER_MACHINE_NAME)
 networksetup -setdnsservers Wi-Fi $DOCKER_MACHINE_IP 8.8.8.8
 networksetup -setsearchdomains Wi-Fi consul net
 ```
