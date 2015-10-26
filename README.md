@@ -6,6 +6,12 @@ What is this repository?
 
 POC using Terraform, Consul and Vault. This repo will allow you to spin up a Consul server with a UI.
 
+If you plan to use Vault + Consul and Terraform to achieve a well formed infrastructure this is a solid starting point.
+
+You're able to spin up the 'cluster' with either `docker-compose` or `terraform`.
+
+Both solutions enable you to further extend the base and customize to your needs.
+
 Getting Started
 ===============
 
@@ -13,8 +19,8 @@ Prerequisites
 -------------
 
 -	[Docker](https://docs.docker.com/installation/)
--	[Docker Compose](https://docs.docker.com/compose/install/) installed.
--	[Terraform](https://terraform.io/) is nice to have
+-	[Docker Compose](https://docs.docker.com/compose/install/) installed. (Optional) - If you use docker-compose instead of terraform
+-	[Terraform](https://terraform.io/) is nice to have if you plan on using terraform instead of docker-compose
 
 Docker Setup
 ------------
@@ -33,7 +39,7 @@ DNS Forwarding
 
 ### Mac OS X
 
-For proper forwarding of the DNS queries to consul and so resolving domains like `consul.node.consul` or `vault.service.consul` it is required that you configure your resolver to look for .consul queries at your DOCKER_HOST to achieve that it's the easiest to:
+For proper forwarding of the DNS queries to consul and so resolving domains like `consul.node.consul` or `vault.service.consul` it is required that you configure your resolver to look for .consul queries at your `DOCKER_HOST` to achieve that it's the easiest to:
 
 ```shell
 DOCKER_MACHINE_NAME="default"
@@ -105,3 +111,26 @@ resource docker_container "api" {
 }
 
 ```
+
+### Where
+
+-	`backingInfrastructure` refers to terra-con-vault
+-	`apiImage` is an image you want to build in your project and possibly use it later to start a container
+-	`SERVICE_NAME` env variable will take care of naming your service in consul while registering it *magic*
+-	`SERVICE_TAGS` can optionally be provided to further separate services
+
+### You should use Packer! It's for building your Docker images!
+
+Yep, but no. It just doesn't work out of the box on OS X and that's a no-go. sshfs is just bad for your health.
+
+*Further reading for the IT masochist:* [Why you're not getting packer in this POC](https://github.com/mitchellh/packer/wiki/Using-packer-on-Mac-OS-X-with-boot2docker)
+
+### Further down the road
+
+-	Better bootstrap (consul.json)
+-	Atlas integration
+-	Local Development environment with automatic tests
+-	Some cleaning and an initial release to the community
+-	Auto-Unseal Vault
+-	Populate Consul with keys
+-	Bootstrap application configuration with `envconsul`

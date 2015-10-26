@@ -1,4 +1,5 @@
 consul/assets/conf.d/consul.json
+nginxgen/assets/templates/nginx.conf
 .terraform
 *.plan
 *.tfstate

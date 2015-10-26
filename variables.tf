@@ -1,6 +1,6 @@
 variable repository {
-    description = "Docker Hub Repository prefix to use when pulling"
-    default = "quay.io/sweebr"
+    description = "Docker Hub Repository prefix to use when pulling or tagging a build"
+    default = ""
 }
 
 variable dockerHostIp {

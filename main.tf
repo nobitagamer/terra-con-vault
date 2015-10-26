@@ -1,8 +1,9 @@
 provider "docker" {
     # left empty intentionally to assume DOCKER_HOST and DOCKER_CERT_PATH
-    # host = "tcp://192.168.99.100:2376"
 }
 
+# CONSUL
+# Provide easy service discovery and health-checks
 module "consul" {
     source = "./consul"
     # Docker Hub repository
@@ -13,6 +14,8 @@ module "consul" {
     basePath = "${var.basePath}"
 }
 
+# REGISTRATOR
+# Register services with Consul by listening to the docker socket
 module "registrator" {
     source = "./registrator"
     # To make sure that consul is running we use it's name as a variable in other modules
@@ -21,6 +24,8 @@ module "registrator" {
     dockerHostIp = "${var.dockerHostIp}"
 }
 
+# NGINXGEN
+# Dynamically generate configuration based on the running services and reload NGiNX.
 module "nginxgen" {
     source = "./nginxgen"
     # To make sure that consul is running we use it's name as a variable in other modules
@@ -31,6 +36,8 @@ module "nginxgen" {
     basePath = "${var.basePath}"
 }
 
+# VAULT
+# Manage your secrets
 module "vault" {
     source = "./vault"
     # To make sure that consul is running we use it's name as a variable in other modules
