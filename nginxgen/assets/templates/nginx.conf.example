@@ -1,0 +1,54 @@
+server {
+  listen 80 default_server;
+  server_name _;
+  return 503;
+}
+
+upstream consul {
+  least_conn;
+  server 192.168.99.100:8500;
+}
+
+# Lets you reach Consul on consul.node.consul without using a port number.
+server {
+  server_name consul.node.consul;
+  location / {
+    proxy_pass http://consul;
+  }
+}
+
+# HTTP
+upstream app {
+  least_conn;
+  {{range service "app"}}
+  server  {{.Address}}:{{.Port}};
+  {{else}}server 127.0.0.1:65535;{{end}}
+}
+
+server {
+  server_name *.app.service.consul app.service.consul;
+  location / {
+    proxy_pass http://frontend;
+  }
+}
+
+# WEBSOCKET
+# upstream app {
+#   least_conn;
+#   {{range service "app"}}
+#   server  {{.Address}}:{{.Port}};
+#   {{else}}server 127.0.0.1:65534;{{end}}
+# }
+#
+# server {
+#   server_name app.service.consul;
+#   location / {
+#     proxy_pass http://app;
+#     proxy_http_version 1.1;
+#     proxy_set_header X-Real-IP $remote_addr;
+#     proxy_set_header Host $host;
+#     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#     proxy_set_header Upgrade $http_upgrade;
+#     proxy_set_header Connection "upgrade";
+#   }
+# }
