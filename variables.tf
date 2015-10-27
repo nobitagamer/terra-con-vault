@@ -1,6 +1,5 @@
 variable repository {
     description = "Docker Hub Repository prefix to use when pulling or tagging a build"
-    default = ""
 }
 
 variable dockerHostIp {
