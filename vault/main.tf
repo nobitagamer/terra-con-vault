@@ -23,8 +23,7 @@ resource "docker_container" "vault" {
     ]
     env = [
         "SERVICE_NAME=vault",
-        "VAULT_ADDR=http://0.0.0.0:8200",
-        "VAULT_TOKEN=lofasz"
+        "VAULT_ADDR=http://0.0.0.0:8200"
     ]
     links = [
         "${var.consul}:consul"
