@@ -13,15 +13,16 @@ consul:
 
 registrator:
   image: gliderlabs/registrator:latest
-  command: consul://0.0.0.0:8500
-  net: "host"
+  command: -ip=192.168.99.100 consul://consul:8500
+  links:
+    - consul:consul
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock:ro
 
 
 nginxgen:
   build: nginxgen/
-  hostname: dev
+  hostname: nginxgen
   ports:
     - "80:80"
   links:
@@ -33,7 +34,7 @@ nginxgen:
 
 vault:
   build: vault/
-  hostname: vault.localhost.consul
+  hostname: vault
   ports:
     - "8200:8200"
   command: server -config=/vault/conf.d/vault.hcl
@@ -45,4 +46,3 @@ vault:
     - "SERVICE_NAME=vault"
     - "SERVICE_TAGS=vault"
     - "VAULT_ADDR=http://0.0.0.0:8200"
-    - "VAULT_TOKEN=lofasz"
