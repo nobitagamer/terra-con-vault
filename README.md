@@ -29,6 +29,12 @@ Docker Setup
 
 -	Create the Consul configuration file that will be mounted to the container as part of the conf.d directory: `cp consul/assets/conf.d/consul.json.example /consul/assets/conf.d/consul.json`
 
+### NGiNXGen
+
+-	Create the NGiNX configuration file that will be mounted to the container as part of the templates directory: `cp nginxgen/assets/templates/nginx.conf.example nginxgen/assets/templates/nginx.conf`
+
+*Make sure to change the service you're looking for to match the SERVICE_NAME you're to introduce.*
+
 #### Published ports
 
 -	53 (DNS)
