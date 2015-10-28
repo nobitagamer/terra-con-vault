@@ -34,6 +34,10 @@ module "nginxgen" {
     repository = "${var.repository}"
     # Dynamic basePath
     basePath = "${var.basePath}"
+    # Force binding to the docker host ip
+    dockerHostIp = "${var.dockerHostIp}"
+    # Set template path
+    nginxTemplate = "${var.nginxTemplate}"
 }
 
 # VAULT
@@ -46,4 +50,12 @@ module "vault" {
     repository = "${var.repository}"
     # Dynamic basePath
     basePath = "${var.basePath}"
+}
+
+output "consul" {
+  value = "${module.consul.ip}"
+}
+
+output "nginxgen" {
+  value = "${module.nginxgen.ip}"
 }

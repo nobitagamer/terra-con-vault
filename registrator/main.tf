@@ -11,9 +11,6 @@ resource "docker_container" "registrator" {
     hostname = "registrator"
     image = "${docker_image.registrator.latest}"
     must_run = true
-    links = [
-        "${var.consul}:consul"
-    ]
     volumes = {
         host_path = "/var/run/docker.sock"
         container_path = "/tmp/docker.sock"
@@ -21,7 +18,7 @@ resource "docker_container" "registrator" {
     }
     command = [
         "-ip=${var.dockerHostIp}",
-        "consul://consul:8500"
+        "consul://${var.dockerHostIp}:8500"
     ]
 }
 

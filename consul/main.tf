@@ -1,6 +1,10 @@
 variable basePath {}
 variable dockerHostIp {}
 variable repository {}
+variable consulConfig {
+  description = "Consul configuration file"
+  default = "consul/assets/conf.d/consul.json.example"
+}
 
 module "dockerImageHelper" {
     source = "../image-builder"
@@ -12,7 +16,14 @@ module "dockerImageHelper" {
     repository = "${var.repository}"
 }
 
+resource "null_resource" "copyConsulConfig" {
+  provisioner "local-exec" {
+    command = "cp ${path.cwd}/${var.consulConfig} ${path.cwd}/${var.basePath}/consul/assets/conf.d/consul.json"
+  }
+}
+
 resource "docker_container" "consul" {
+    depends_on = ["null_resource.copyConsulConfig"]
     name = "consul"
     hostname = "consul"
     image = "${module.dockerImageHelper.dockerImage}"
@@ -53,4 +64,8 @@ resource "docker_container" "consul" {
 
 output "name" {
     value = "${docker_container.consul.name}"
+}
+
+output "ip" {
+  value = "${docker_container.consul.ip_address}"
 }

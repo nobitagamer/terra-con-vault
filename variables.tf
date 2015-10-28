@@ -11,3 +11,8 @@ variable basePath {
     description = "Enable loading these files as a tf module thus with a variable base path"
     default = "."
 }
+
+variable nginxTemplate {
+  description = "Change the default template path"
+  default = "nginxgen/assets/conf.d/nginx.conf.example"
+}

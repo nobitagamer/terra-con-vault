@@ -25,9 +25,6 @@ resource "docker_container" "vault" {
         "SERVICE_NAME=vault",
         "VAULT_ADDR=http://0.0.0.0:8200"
     ]
-    links = [
-        "${var.consul}:consul"
-    ]
     volumes = {
         host_path = "${path.cwd}/${var.basePath}/vault/assets/conf.d"
         container_path = "/vault/conf.d"
