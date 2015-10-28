@@ -1,10 +1,7 @@
 variable basePath {}
 variable dockerHostIp {}
 variable repository {}
-variable consulConfig {
-  description = "Consul configuration file"
-  default = "consul/assets/conf.d/consul.json.example"
-}
+variable consulConfig {}
 
 module "dockerImageHelper" {
     source = "../image-builder"

@@ -27,11 +27,11 @@ Docker Setup
 
 ### Consul
 
--	Create the Consul configuration file that will be mounted to the container as part of the conf.d directory: `cp consul/assets/conf.d/consul.json.example /consul/assets/conf.d/consul.json`
+-	Provide your very own configuration at will by the `consulConfig` variable path should be relative to module root.
 
 ### NGiNXGen
 
--	Create the NGiNX configuration file that will be mounted to the container as part of the templates directory: `cp nginxgen/assets/templates/nginx.conf.example nginxgen/assets/templates/nginx.conf`
+-	Provide your very own configuration at will by the `nginxTemplate` variable path should be relative to module root.
 
 *Make sure to change the service you're looking for to match the SERVICE_NAME you're to introduce.*
 
@@ -133,10 +133,7 @@ Yep, but no. It just doesn't work out of the box on OS X and that's a no-go. ssh
 
 ### Further down the road
 
--	Better bootstrap (consul.json)
 -	Atlas integration
 -	Local Development environment with automatic tests
 -	Some cleaning and an initial release to the community
 -	Auto-Unseal Vault
--	Populate Consul with keys
--	Bootstrap application configuration with `envconsul`

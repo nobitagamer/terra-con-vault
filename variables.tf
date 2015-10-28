@@ -12,6 +12,11 @@ variable basePath {
     default = "."
 }
 
+variable consulConfig {
+  description = "Consul configuration file"
+  default = "consul/assets/conf.d/consul.json.example"
+}
+
 variable nginxTemplate {
   description = "Change the default template path"
   default = "nginxgen/assets/templates/nginx.conf.example"

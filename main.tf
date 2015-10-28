@@ -12,6 +12,8 @@ module "consul" {
     dockerHostIp = "${var.dockerHostIp}"
     # Dynamic basePath
     basePath = "${var.basePath}"
+    # Consul config path
+    consulConfig = "${var.consulConfig}"
 }
 
 # REGISTRATOR
