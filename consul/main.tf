@@ -59,6 +59,29 @@ resource "docker_container" "consul" {
     }
 }
 
+provider "consul" {
+  address = "${var.dockerHostIp}:8500"
+  datacenter = "dc1"
+  scheme = "http"
+}
+
+resource "null_resource" "log" {
+  provisioner "local-exec" {
+    command = "echo Consul running at: ${docker_container.consul.ip_address}; sleep 5;"
+  }
+}
+
+resource "consul_keys" "docker" {
+  depends_on = ["null_resource.log"]
+  datacenter = "dc1"
+  key {
+    name = "dockerHostIp"
+    path = "dev/config/docker/host"
+    default = "${var.dockerHostIp}"
+    value = "${var.dockerHostIp}"
+  }
+}
+
 output "name" {
     value = "${docker_container.consul.name}"
 }
