@@ -102,6 +102,7 @@ resource docker_container "api" {
 - `SERVICE_TAGS` can optionally be provided to further separate services
 - `basePath` is `./terraform` in this case because we put the terra-con-vault into a git submodule at the terraform path
 
+## Important notes about using this as a module in your project
 You might not want to keep terraform files for your dev env in your root folder, so if you decide to say move it to `dev` then you should `terraform apply dev` from the root folder, and keep everything relative to root so it's easier to work with.
 
 ## You should use Packer! It's for building your Docker images!
