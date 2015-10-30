@@ -19,5 +19,5 @@ variable consulConfig {
 
 variable nginxTemplate {
   description = "Change the default template path"
-  default = "nginxgen/assets/templates/nginx.conf.example"
+  default = "nginxgen/assets/templates/nginx.conf.ctmpl.example"
 }
