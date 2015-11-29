@@ -1,6 +1,6 @@
 variable "aws_region" {
   description = "The AWS region to create resources in."
-  default = "us-east-1"
+  default = "eu-west-1"
 }
 
 variable "aws_amis" {
