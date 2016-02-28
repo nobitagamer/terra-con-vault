@@ -1,4 +1,4 @@
-variable basePath {
+variable base_path {
   description = "base path to use when building images"
   default = "."
 }

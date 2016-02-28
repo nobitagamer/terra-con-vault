@@ -27,11 +27,11 @@ Docker Setup
 
 ### Consul
 
--	Provide your very own configuration at will by the `consulConfig` variable path should be relative to module root.
+-	Provide your very own configuration at will by the `consul_config_path` variable path should be relative to module root.
 
 ### NGiNXGen
 
--	Provide your very own configuration at will by the `nginxTemplate` variable path should be relative to module root.
+-	Provide your very own configuration at will by the `nginx_template_path` variable path should be relative to module root.
 
 *Make sure to change the service you're looking for to match the SERVICE_NAME you're to introduce.*
 
@@ -69,9 +69,9 @@ Using this as a module in your project
 
 I found that it's pretty neat to just use this as a terraform module in your own project. So this piece of infrastructure is encapsulated and reusable.
 
-To achieve this given that terraform's module system will resolve everything relative to the root module. There's a variable which is to mitigate this called `basePath`.
+To achieve this given that terraform's module system will resolve everything relative to the root module. There's a variable which is to mitigate this called `base_path`.
 
-The idea is that by default basePath is `.` meaning that whenever it's used it still just resolves to root by default. However when you have these files in a subfolder of the project you'd want to use that folder as `basePath`.
+The idea is that by default base_path is `.` meaning that whenever it's used it still just resolves to root by default. However when you have these files in a subfolder of the project you'd want to use that folder as `base_path`.
 
 Thus all the paths set for image-builder would still work.
 
@@ -86,7 +86,7 @@ provider "docker" {}
 
 module "backingInfrastructure" {
   source = "./terraform"
-  basePath = "terraform"
+  base_path = "terraform"
 }
 
 module "apiImage" {

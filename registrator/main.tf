@@ -1,5 +1,5 @@
 variable consul {}
-variable dockerHostIp {}
+variable docker_host_ip {}
 
 resource "docker_image" "registrator" {
     keep_updated = true
@@ -17,8 +17,8 @@ resource "docker_container" "registrator" {
         read_only = true
     }
     command = [
-        "-ip=${var.dockerHostIp}",
-        "consul://${var.dockerHostIp}:8500"
+        "-ip=${var.docker_host_ip}",
+        "consul://${var.docker_host_ip}:8500"
     ]
 }
 

@@ -1,11 +1,11 @@
-variable basePath {}
+variable base_path {}
 variable consul {}
 variable repository {}
 
 module "dockerImageHelper" {
     source = "../image-builder"
     name = "vault"
-    basePath = "${var.basePath}"
+    base_path = "${var.base_path}"
     path = "vault"
     tag = "latest"
     pull = false
@@ -26,7 +26,7 @@ resource "docker_container" "vault" {
         "VAULT_ADDR=http://0.0.0.0:8200"
     ]
     volumes = {
-        host_path = "${path.cwd}/${var.basePath}/vault/assets/conf.d"
+        host_path = "${path.cwd}/${var.base_path}/vault/assets/conf.d"
         container_path = "/vault/conf.d"
     }
     ports = {

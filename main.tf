@@ -9,11 +9,11 @@ module "consul" {
     # Docker Hub repository
     repository = "${var.repository}"
     # Force binding to the docker host ip
-    dockerHostIp = "${var.dockerHostIp}"
-    # Dynamic basePath
-    basePath = "${var.basePath}"
+    docker_host_ip = "${var.docker_host_ip}"
+    # Dynamic base_path
+    base_path = "${var.base_path}"
     # Consul config path
-    consulConfig = "${var.consulConfig}"
+    consul_config_path = "${var.consul_config_path}"
 }
 
 # REGISTRATOR
@@ -23,7 +23,7 @@ module "registrator" {
     # To make sure that consul is running we use it's name as a variable in other modules
     consul = "${module.consul.name}"
     # Force binding to the docker host ip
-    dockerHostIp = "${var.dockerHostIp}"
+    docker_host_ip = "${var.docker_host_ip}"
 }
 
 # NGINXGEN
@@ -34,12 +34,12 @@ module "nginxgen" {
     consul = "${module.consul.name}"
     # Docker Hub repository
     repository = "${var.repository}"
-    # Dynamic basePath
-    basePath = "${var.basePath}"
+    # Dynamic base_path
+    base_path = "${var.base_path}"
     # Force binding to the docker host ip
-    dockerHostIp = "${var.dockerHostIp}"
+    docker_host_ip = "${var.docker_host_ip}"
     # Set template path
-    nginxTemplate = "${var.nginxTemplate}"
+    nginx_template_path = "${var.nginx_template_path}"
 }
 
 # VAULT
@@ -50,8 +50,8 @@ module "vault" {
     consul = "${module.consul.name}"
     # Docker Hub repository
     repository = "${var.repository}"
-    # Dynamic basePath
-    basePath = "${var.basePath}"
+    # Dynamic base_path
+    base_path = "${var.base_path}"
 }
 
 output "consul" {

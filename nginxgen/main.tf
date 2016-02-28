@@ -1,13 +1,13 @@
-variable basePath {}
+variable base_path {}
 variable consul {}
 variable repository {}
-variable dockerHostIp {}
-variable nginxTemplate {}
+variable docker_host_ip {}
+variable nginx_template_path {}
 
 module "dockerImageHelper" {
     source = "../image-builder"
     name = "nginxgen"
-    basePath = "${var.basePath}"
+    base_path = "${var.base_path}"
     path = "nginxgen"
     tag = "latest"
     pull = false
@@ -16,7 +16,7 @@ module "dockerImageHelper" {
 
 resource "null_resource" "copyNginxConfig" {
   provisioner "local-exec" {
-    command = "cp ${path.cwd}/${var.nginxTemplate} ${path.cwd}/${var.basePath}/nginxgen/assets/templates/nginx.conf.ctmpl"
+    command = "cp ${path.cwd}/${var.nginx_template_path} ${path.cwd}/${var.base_path}/nginxgen/assets/templates/nginx.conf.ctmpl"
   }
 }
 
@@ -31,7 +31,7 @@ resource "docker_container" "nginxgen" {
         external = 80
     }
     env = [
-        "CONSUL=${var.dockerHostIp}:8500",
+        "CONSUL=${var.docker_host_ip}:8500",
         "SERVICE_NAME=nginxgen",
         "SERVICE_TAGS=nginx"
     ]

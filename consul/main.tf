@@ -1,12 +1,12 @@
-variable basePath {}
-variable dockerHostIp {}
+variable base_path {}
+variable docker_host_ip {}
 variable repository {}
-variable consulConfig {}
+variable consul_config_path {}
 
 module "dockerImageHelper" {
     source = "../image-builder"
     name = "consul"
-    basePath = "${var.basePath}"
+    base_path = "${var.base_path}"
     path = "consul"
     tag = "latest"
     pull = false
@@ -15,7 +15,7 @@ module "dockerImageHelper" {
 
 resource "null_resource" "copyConsulConfig" {
   provisioner "local-exec" {
-    command = "cp ${path.cwd}/${var.consulConfig} ${path.cwd}/${var.basePath}/consul/assets/conf.d/consul.json"
+    command = "cp ${path.cwd}/${var.consul_config_path} ${path.cwd}/${var.base_path}/consul/assets/conf.d/consul.json"
   }
 }
 
@@ -29,7 +29,7 @@ resource "docker_container" "consul" {
         "agent",
         "-server",
         "-client=0.0.0.0",
-        "-advertise=${var.dockerHostIp}",
+        "-advertise=${var.docker_host_ip}",
         "-bootstrap-expect=1",
         "-config-dir=/consul/conf.d"
     ]
@@ -37,7 +37,7 @@ resource "docker_container" "consul" {
         "SERVICE_NAME=consul"
     ]
     volumes = {
-        host_path = "${path.cwd}/${var.basePath}/consul/assets/conf.d"
+        host_path = "${path.cwd}/${var.base_path}/consul/assets/conf.d"
         container_path = "/consul/conf.d"
     }
     ports = {
@@ -60,7 +60,7 @@ resource "docker_container" "consul" {
 }
 
 provider "consul" {
-  address = "${var.dockerHostIp}:8500"
+  address = "${var.docker_host_ip}:8500"
   datacenter = "dc1"
   scheme = "http"
 }
@@ -75,10 +75,10 @@ resource "consul_keys" "docker" {
   depends_on = ["null_resource.log"]
   datacenter = "dc1"
   key {
-    name = "dockerHostIp"
+    name = "docker_host_ip"
     path = "dev/config/docker/host"
-    default = "${var.dockerHostIp}"
-    value = "${var.dockerHostIp}"
+    default = "${var.docker_host_ip}"
+    value = "${var.docker_host_ip}"
   }
 }
 
