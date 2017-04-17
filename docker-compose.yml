@@ -7,6 +7,7 @@ consul:
   command: agent -server -bootstrap-expect 1 -config-dir /consul/conf.d -advertise 192.168.147.130 -client 0.0.0.0
   volumes:
     - ./consul/assets/conf.d:/consul/conf.d
+    - ../data/terra-con-vault/consul:/consul/data
   environment:
       - "SERVICE_NAME=consul"
       - "SERVICE_TAGS=consul"

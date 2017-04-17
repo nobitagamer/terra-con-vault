@@ -12,3 +12,8 @@ before_install:
 
 script:
   - docker-compose build
+  
+branches:
+  only:
+    - gh-pages
+    - /.*/
