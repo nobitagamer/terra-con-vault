@@ -4,7 +4,7 @@ variable repository {
 
 variable docker_host_ip {
     description = "Docker Host Ip, used to force binding to it locally"
-    default = "192.168.99.100"
+    default = "192.168.147.130"
 }
 
 variable base_path {

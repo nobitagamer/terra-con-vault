@@ -2,8 +2,8 @@ FROM debian:jessie
 #ENV SHELL /bin/bash
 
 
-ENV CONSUL_VERSION 0.5.2
-ENV UI_VERSION 0.5.2
+ENV CONSUL_VERSION 0.8.0
+ENV UI_VERSION 0.8.0
 
 RUN apt-get update && \
     apt-get install ca-certificates curl unzip -y && \
@@ -13,12 +13,12 @@ RUN apt-get update && \
 
 RUN bash -c 'mkdir -p /consul/{data,conf.d,ui}'
 
-RUN curl -Lo /consul/${CONSUL_VERSION}_linux_amd64.zip https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_linux_amd64.zip && \
+RUN curl -Lo /consul/${CONSUL_VERSION}_linux_amd64.zip https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
     unzip /consul/${CONSUL_VERSION}_linux_amd64.zip -d /consul  && \
     rm -rf /consul/${CONSUL_VERSION}_linux_amd64.zip && \
     chmod +x /consul/consul && \
-    curl -Lo /tmp/${UI_VERSION}_web_ui.zip https://dl.bintray.com/mitchellh/consul/${UI_VERSION}_web_ui.zip && \
-    unzip /tmp/${UI_VERSION}_web_ui.zip -d /tmp && \
+    curl -Lo /tmp/${UI_VERSION}_web_ui.zip https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_web_ui.zip && \
+    unzip /tmp/${UI_VERSION}_web_ui.zip -d /tmp/dist && \
     cp -r /tmp/dist/* /consul/ui && \
     rm -rf /tmp/*
 

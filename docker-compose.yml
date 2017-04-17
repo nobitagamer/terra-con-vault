@@ -4,16 +4,16 @@ consul:
   ports:
     - "53:53/udp"
     - "8500:8500"
-  command: agent -server -bootstrap-expect 1 -config-dir /consul/conf.d -advertise 192.168.99.100 -client 0.0.0.0
+  command: agent -server -bootstrap-expect 1 -config-dir /consul/conf.d -advertise 192.168.147.130 -client 0.0.0.0
   volumes:
-    - consul/assets/conf.d:/consul/conf.d
+    - ./consul/assets/conf.d:/consul/conf.d
   environment:
       - "SERVICE_NAME=consul"
       - "SERVICE_TAGS=consul"
 
 registrator:
   image: gliderlabs/registrator:latest
-  command: -ip=192.168.99.100 consul://consul:8500
+  command: -ip=192.168.147.130 consul://consul:8500
   links:
     - consul:consul
   volumes:
@@ -41,7 +41,7 @@ vault:
   links:
     - consul:consul
   volumes:
-    - vault/assets/conf.d:/vault/conf.d
+    - ./vault/assets/conf.d:/vault/conf.d
   environment:
     - "SERVICE_NAME=vault"
     - "SERVICE_TAGS=vault"
