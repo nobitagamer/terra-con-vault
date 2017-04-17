@@ -11,7 +11,7 @@ upstream consul {
   server {{key "dev/config/docker/host"}}:8500;
   {{else}}
   #default
-  server 192.168.99.100:8500;
+  server 192.168.147.130:8500;
   {{end}}
 }
 
