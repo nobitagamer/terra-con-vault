@@ -1,1 +1,6 @@
 consul/assets/conf.d/consul.json
+nginxgen/assets/templates/nginx.conf.ctmpl
+.terraform
+*.plan
+*.tfstate
+*.tfstate.backup

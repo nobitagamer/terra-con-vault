@@ -1,5 +1,5 @@
 backend "consul" {
-  address = "consul:8500"
+  address = "192.168.147.130:8500"
   path = "vault"
 }
 
